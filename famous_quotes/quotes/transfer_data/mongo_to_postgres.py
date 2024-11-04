@@ -38,22 +38,41 @@ cur = conn.cursor()
 
 
 # # Insert migrated authors
-for author in migrate_authors:
-    insert_query = """INSERT INTO quotes_author (fullname, born_date, born_location, description) 
-    VALUES (%s, %s, %s, %s);"""
-    cur.execute(insert_query, (author["fullname"], author["born_date"], author["born_location"], author["description"]))
-    conn.commit()
+# for author in migrate_authors:
+#     insert_query = """INSERT INTO quotes_author (fullname, born_date, born_location, description)
+#     VALUES (%s, %s, %s, %s);"""
+#     cur.execute(insert_query, (author["fullname"], author["born_date"], author["born_location"], author["description"]))
+#     conn.commit()
 
 #  # # Insert migrated quotes
-for quote in migrate_quotes:
-    for author in migrate_authors:
-        if author["_id"] == quote["author"]:
-            author_id = author["fullname"]
-            insert_query = """INSERT INTO quotes_quote (quote, author_id, tags) 
-            VALUES (%s, (SELECT id FROM quotes_author WHERE fullname = %s), %s);"""
-            cur.execute(insert_query, (quote["quote"], author_id, quote["tags"]))
-    conn.commit()
+# for quote in migrate_quotes:
+#     for author in migrate_authors:
+#         if author["_id"] == quote["author"]:
+#             author_id = author["fullname"]
+#             insert_query = """INSERT INTO quotes_quote (quote, author_id, tags)
+#             VALUES (%s, (SELECT id FROM quotes_author WHERE fullname = %s), %s);"""
+#             cur.execute(insert_query, (quote["quote"], author_id, quote["tags"]))
+#     conn.commit()
 
+def fill_tags():
+    for quote in migrate_quotes:
+        for tag in quote["tags"]:
+            insert_query = """INSERT INTO quotes_tag (name) VALUES (%s)
+            ON CONFLICT (name) DO NOTHING;"""
+            cur.execute(insert_query, (tag, ))
+        conn.commit()
+
+def fill_quote_tag():
+    for quote in migrate_quotes:
+        for tag in quote["tags"]:
+            insert_query = """INSERT INTO quotes_quotetag (quote_id, tag_id)
+                      VALUES ((SELECT id FROM quotes_quote WHERE quote = %s), 
+                      (SELECT id FROM quotes_tag WHERE name = %s));"""
+            cur.execute(insert_query, (quote["quote"], tag))
+        conn.commit()
+
+# fill_tags()
+fill_quote_tag()
 # # Close connections
 cur.close()
 conn.close()
