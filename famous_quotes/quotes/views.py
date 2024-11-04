@@ -21,3 +21,4 @@ class QuotesListView(ListView):
     template_name = "quotes/index.html"
     context_object_name = 'quotes'
 
+

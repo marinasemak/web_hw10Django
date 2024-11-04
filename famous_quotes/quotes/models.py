@@ -9,14 +9,13 @@ class Author(models.Model):
     born_location = models.CharField(max_length=150)
     description = models.TextField(blank=True)
 
+class Tag(models.Model):
+    name = models.CharField(max_length=50, unique=True)
 
 class Quote(models.Model):
     quote = models.TextField()
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
 
-class Tag(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    tags = models.ManyToManyField(Tag, related_name='quotes')
 
-class QuoteTag(models.Model):
-    quote = models.ForeignKey(Quote, on_delete=models.CASCADE)
-    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+

@@ -65,14 +65,14 @@ def fill_tags():
 def fill_quote_tag():
     for quote in migrate_quotes:
         for tag in quote["tags"]:
-            insert_query = """INSERT INTO quotes_quotetag (quote_id, tag_id)
+            insert_query = """INSERT INTO quotes_quote_tags (quote_id, tag_id)
                       VALUES ((SELECT id FROM quotes_quote WHERE quote = %s), 
                       (SELECT id FROM quotes_tag WHERE name = %s));"""
             cur.execute(insert_query, (quote["quote"], tag))
         conn.commit()
 
 # fill_tags()
-fill_quote_tag()
+# fill_quote_tag()
 # # Close connections
 cur.close()
 conn.close()
