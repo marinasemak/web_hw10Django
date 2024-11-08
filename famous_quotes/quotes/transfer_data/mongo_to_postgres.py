@@ -38,11 +38,12 @@ cur = conn.cursor()
 
 
 # # Insert migrated authors
-# for author in migrate_authors:
-#     insert_query = """INSERT INTO quotes_author (fullname, born_date, born_location, description)
-#     VALUES (%s, %s, %s, %s);"""
-#     cur.execute(insert_query, (author["fullname"], author["born_date"], author["born_location"], author["description"]))
-#     conn.commit()
+def fill_authors():
+    for author in migrate_authors:
+        insert_query = """INSERT INTO quotes_author (fullname, born_date, born_location, description)
+        VALUES (%s, %s, %s, %s);"""
+        cur.execute(insert_query, (author["fullname"], author["born_date"], author["born_location"], author["description"]))
+        conn.commit()
 
 #  # # Insert migrated quotes
 # for quote in migrate_quotes:
@@ -73,6 +74,7 @@ def fill_quote_tag():
 
 # fill_tags()
 # fill_quote_tag()
+fill_authors()
 # # Close connections
 cur.close()
 conn.close()

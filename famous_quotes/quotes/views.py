@@ -21,8 +21,8 @@ class QuotesListView(ListView):
     template_name = "quotes/index.html"
     context_object_name = 'quotes'
 
-    # def get_queryset(self):
-    #     return Quote.objects.select_related('author').all()
+    def get_queryset(self):
+        return Quote.objects.select_related('author').all()
 
 class AuthorDetailView(DetailView):
     model = Author

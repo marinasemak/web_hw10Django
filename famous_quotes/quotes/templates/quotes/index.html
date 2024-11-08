@@ -9,8 +9,7 @@
             <div class="quote" itemscope="" >
                 <span class="text" itemprop="text">{{ quote.quote }}</span>
                 <span>by <small class="author" itemprop="author">{{ quote.author.fullname }}</small>
-                    {% load slugify %}
-                    <a href="/author/{{ quote.author.fullname|slugify }}">(about) </a>
+                    <a href="{{ quote.author.get_absolute_url }}">(about) </a>
                 </span>
                 <div class="tags">
                     Tags:
