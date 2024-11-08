@@ -4,16 +4,18 @@
 
     <div class="row">
         <div class="col-md-8">
+
             {% for quote in quotes %}
             <div class="quote" itemscope="" >
-                <span class="text" itemprop="text"></span>
+                <span class="text" itemprop="text">{{ quote.quote }}</span>
                 <span>by <small class="author" itemprop="author">{{ quote.author.fullname }}</small>
-                    <a href="/author/{{ quote.author.fullname }}">(about) </a>
+                    {% load slugify %}
+                    <a href="/author/{{ quote.author.fullname|slugify }}">(about) </a>
                 </span>
                 <div class="tags">
                     Tags:
-                    {% for tag in quote.tags %}
-                    <a class="tag" href="/tag/change/page/1/">{{tag}}</a>
+                    {% for tag in quote.tags.all %}
+                    <a class="tag" href="/tag/change/page/1/">{{ tag.name }}</a>
                     {% endfor %}
 
                 </div>
