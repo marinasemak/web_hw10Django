@@ -19,14 +19,21 @@
                 </h1>
            </div>
            <div class="col-md-4">
-                <p>
+            <div class="d-flex align-items-center flex-nowrap">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'quotes:add_author' %}" class="me-2">Add author</a>
+                    <a href="{% url 'quotes:add_quote' %}" class="me-2">Add quote</a>
+                    <form action="{% url 'app_auth:logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-link ms-2">Log Out</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'app_auth:signup' %}" class="me-2">SignUp</a>
+                    <a href="{% url 'app_auth:signin' %}" class="ms-2">Login</a>
+                {% endif %}
+            </div>
+</div>
 
-                    <a href="/logout">Logout</a>
-                    <a href="/logout">SignIn</a>
-                    <a href="/logout">SignUp</a>
-
-                </p>
-           </div>
        </div>
         {% block content %}
         {% endblock %}

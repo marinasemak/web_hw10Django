@@ -109,3 +109,16 @@ ul.pager {
 .zyte {
   color: #b02cce;
 }
+
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.col-xs-3 {
+    width: 40%;
+}
+
+.right-align {
+    margin-left: auto;
+}

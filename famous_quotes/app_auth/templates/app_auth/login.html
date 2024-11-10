@@ -1,0 +1,41 @@
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+
+{% if messages %}
+
+        {% for message in messages %}
+        <div {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %}> {{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if form.errors and form.non_field_errors %}
+    <div class='alert alert-danger' role='alert'>
+        {{form.non_field_errors}}
+    </div>
+    {% endif %}
+
+    <h2>Login</h2>
+
+    <form method="post" accept-charset="utf-8">
+        {% csrf_token %}
+            <div class="row">
+                <div class="form-group col-xs-3">
+                    <label>Username</label>
+                    {{ form.username }}
+                </div>
+                <span>{{form.errors.username}}</span>
+            </div>
+            <div class="row">
+                <div class="form-group col-xs-3">
+                    <label>Password</label>
+                    {{ form.password }}
+                </div>
+                <span>{{form.errors.password}}</span>
+            </div>
+            <input type="submit" value="Login" class="btn btn-primary">
+
+    </form>
+
+{% endblock %}
