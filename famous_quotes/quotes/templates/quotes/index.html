@@ -14,12 +14,32 @@
                 <div class="tags">
                     Tags:
                     {% for tag in quote.tags.all %}
-                    <a class="tag" href="/tag/change/page/1/">{{ tag.name }}</a>
+                    <a class="tag" href=#>{{ tag.name }}</a>
                     {% endfor %}
 
                 </div>
             </div>
             {% endfor %}
+
+            {% if is_paginated %}
+            <nav>
+                <ul class="pager">
+                    {% if page_obj.has_previous %}
+
+                    <li class="previous">
+                        <a href="?page={{ page_obj.previous_page_number }}"><span aria-hidden="true">←</span> Previous</a>
+                    </li>
+                    {% endif %}
+                    {% if page_obj.has_next %}
+
+                        <li class="next">
+                            <a href="?page={{ page_obj.next_page_number }}">Next <span aria-hidden="true">→</span></a>
+                        </li>
+                    {% endif %}
+
+                </ul>
+            </nav>
+            {% endif %}
 
         </div>
 
