@@ -3,8 +3,9 @@
 from django.db import migrations
 from django.utils.text import slugify
 
+
 def fill_slug_for_existing_authors(apps, schema_editor):
-    Author = apps.get_model('quotes', 'Author')
+    Author = apps.get_model("quotes", "Author")
     for author in Author.objects.all():
         if not author.slug:  # перевіряємо, чи поле slug порожнє
             author.slug = slugify(author.fullname)
